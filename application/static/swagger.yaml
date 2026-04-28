@@ -1,0 +1,264 @@
+swagger: '2.0'
+info:
+  title: "Mechanic API"
+  description: "API for managing mechanics, customers, service tickets, and inventory"
+  version: "1.0.0"
+
+host: "127.0.0.1:5000"
+schemes:
+  - "http"
+
+consumes:
+  - "application/json"
+
+produces:
+  - "application/json"
+
+paths:
+
+  /mechanics:
+    get:
+      tags:
+        - Mechanics
+      summary: "Get all mechanics"
+      description: "Returns a list of all mechanics"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Mechanic"
+          examples:
+            application/json:
+              - id: 1
+                name: "John"
+                specialty: "Engine Repair"
+
+    post:
+      tags:
+        - Mechanics
+      summary: "Create a mechanic"
+      description: "Adds a new mechanic"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/MechanicInput"
+      responses:
+        201:
+          description: "Mechanic created"
+          schema:
+            $ref: "#/definitions/Mechanic"
+          examples:
+            application/json:
+              id: 1
+              name: "John"
+              specialty: "Engine Repair"
+
+  /customers:
+    get:
+      tags:
+        - Customers
+      summary: "Get all customers"
+      description: "Returns all customers"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Customer"
+          examples:
+            application/json:
+              - id: 1
+                name: "Jane Doe"
+                email: "jane@email.com"
+
+    post:
+      tags:
+        - Customers
+      summary: "Create a customer"
+      description: "Adds a new customer"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/CustomerInput"
+      responses:
+        201:
+          description: "Customer created"
+          schema:
+            $ref: "#/definitions/Customer"
+          examples:
+            application/json:
+              id: 1
+              name: "Jane Doe"
+              email: "jane@email.com"
+
+  /service-tickets:
+    get:
+      tags:
+        - Service Tickets
+      summary: "Get all service tickets"
+      description: "Returns all service tickets"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ServiceTicket"
+          examples:
+            application/json:
+              - id: 1
+                description: "Oil change"
+                status: "Open"
+
+    post:
+      tags:
+        - Service Tickets
+      summary: "Create a service ticket"
+      description: "Adds a new service ticket"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceTicketInput"
+      responses:
+        201:
+          description: "Ticket created"
+          schema:
+            $ref: "#/definitions/ServiceTicket"
+          examples:
+            application/json:
+              id: 1
+              description: "Oil change"
+              status: "Open"
+
+  /inventory:
+    get:
+      tags:
+        - Inventory
+      summary: "Get all inventory items"
+      description: "Returns all inventory items"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Inventory"
+          examples:
+            application/json:
+              - id: 1
+                item_name: "Oil Filter"
+                quantity: 10
+
+    post:
+      tags:
+        - Inventory
+      summary: "Add inventory item"
+      description: "Adds a new inventory item"
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/InventoryInput"
+      responses:
+        201:
+          description: "Item created"
+          schema:
+            $ref: "#/definitions/Inventory"
+          examples:
+            application/json:
+              id: 1
+              item_name: "Oil Filter"
+              quantity: 10
+
+definitions:
+
+  Mechanic:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      specialty:
+        type: string
+
+  MechanicInput:
+    type: object
+    properties:
+      name:
+        type: string
+      specialty:
+        type: string
+    required:
+      - name
+
+  Customer:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+
+  CustomerInput:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+    required:
+      - name
+      - email
+
+  ServiceTicket:
+    type: object
+    properties:
+      id:
+        type: integer
+      description:
+        type: string
+      status:
+        type: string
+
+  ServiceTicketInput:
+    type: object
+    properties:
+      description:
+        type: string
+      status:
+        type: string
+    required:
+      - description
+
+  Inventory:
+    type: object
+    properties:
+      id:
+        type: integer
+      item_name:
+        type: string
+      quantity:
+        type: integer
+
+  InventoryInput:
+    type: object
+    properties:
+      item_name:
+        type: string
+      quantity:
+        type: integer
+    required:
+      - item_name
