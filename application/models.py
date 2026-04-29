@@ -1,6 +1,5 @@
 from .extensions import db
 
-# MANY-TO-MANY: service_mechanic
 service_mechanic = db.Table(
     "service_mechanic",
     db.Column("service_ticket_id", db.Integer, db.ForeignKey("service_tickets.id")),

@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from application.extensions import db
 from application.models import Customer
-from . import customer_bp   # ✅ IMPORT blueprint from __init__.py
+from . import customer_bp   
 
 @customer_bp.route("/", methods=["POST"])
 def create_customer():

@@ -1,12 +1,12 @@
 swagger: '2.0'
 info:
-  title: "Mechanic API"
+  title: "Matz Auto Repair API"
   description: "API for managing mechanics, customers, service tickets, and inventory"
   version: "1.0.0"
 
-host: "127.0.0.1:5000"
+host: "matz-auto-repair.onrender.com"
 schemes:
-  - "http"
+  - "https"
 
 consumes:
   - "application/json"
@@ -16,7 +16,7 @@ produces:
 
 paths:
 
-  /mechanics:
+  /mechanics/:
     get:
       tags:
         - Mechanics
@@ -57,7 +57,7 @@ paths:
               name: "John"
               specialty: "Engine Repair"
 
-  /customers:
+  /customers/:
     get:
       tags:
         - Customers
@@ -98,7 +98,7 @@ paths:
               name: "Jane Doe"
               email: "jane@email.com"
 
-  /service-tickets:
+  /service-tickets/:
     get:
       tags:
         - Service Tickets
@@ -116,6 +116,9 @@ paths:
               - id: 1
                 description: "Oil change"
                 status: "Open"
+
+        401:
+          description: "Unauthorized"
 
     post:
       tags:
@@ -139,7 +142,10 @@ paths:
               description: "Oil change"
               status: "Open"
 
-  /inventory:
+        401:
+          description: "Unauthorized"
+
+  /inventory/:
     get:
       tags:
         - Inventory
@@ -179,6 +185,9 @@ paths:
               id: 1
               item_name: "Oil Filter"
               quantity: 10
+
+        401:
+          description: "Unauthorized"
 
 definitions:
 

@@ -1,0 +1,9 @@
+flask
+flask-sqlalchemy
+flask-marshmallow
+marshmallow-sqlalchemy
+flask-limiter
+flask-caching
+python-jose
+gunicorn
+psycopg2

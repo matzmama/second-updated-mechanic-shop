@@ -4,7 +4,6 @@ from application.extensions import db
 from application.models import Inventory
 from ..utils.util import mechanic_token_required
 
-# CREATE part
 @inventory_bp.route("/", methods=["POST"])
 @mechanic_token_required
 def create_part(mechanic_id):
@@ -25,7 +24,6 @@ def create_part(mechanic_id):
     }), 201
 
 
-# GET all parts
 @inventory_bp.route("/", methods=["GET"])
 def get_parts():
     parts = Inventory.query.all()
@@ -35,7 +33,6 @@ def get_parts():
     ])
 
 
-# GET single part
 @inventory_bp.route("/<int:part_id>", methods=["GET"])
 def get_part(part_id):
     part = Inventory.query.get(part_id)
@@ -50,7 +47,6 @@ def get_part(part_id):
     })
 
 
-# UPDATE part
 @inventory_bp.route("/<int:part_id>", methods=["PUT"])
 @mechanic_token_required
 def update_part(mechanic_id, part_id):
@@ -72,7 +68,6 @@ def update_part(mechanic_id, part_id):
     })
 
 
-# DELETE part
 @inventory_bp.route("/<int:part_id>", methods=["DELETE"])
 @mechanic_token_required
 def delete_part(mechanic_id, part_id):

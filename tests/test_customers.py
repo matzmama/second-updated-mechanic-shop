@@ -14,12 +14,12 @@ class TestCustomers(unittest.TestCase):
 
         self.client = self.app.test_client()
 
-    # ✅ GET
+  
     def test_get_customers(self):
         response = self.client.get('/customers/')
         self.assertEqual(response.status_code, 200)
 
-    # ✅ POST (valid)
+  
     def test_create_customer(self):
         payload = {
             "name": "John Doe",
@@ -30,7 +30,7 @@ class TestCustomers(unittest.TestCase):
         response = self.client.post('/customers/', json=payload)
         self.assertEqual(response.status_code, 201)
 
-    # ❌ NEGATIVE TEST
+   
     def test_invalid_customer(self):
         payload = {
             "name": "John Doe"

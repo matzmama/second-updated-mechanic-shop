@@ -4,7 +4,6 @@ from application.extensions import db, limiter, cache
 from application.models import Mechanic
 from ..utils.util import encode_token, token_required, mechanic_token_required
 
-# CREATE mechanic (RATE LIMITED)
 @mechanic_bp.route("/", methods=["POST"])
 @limiter.limit("100 per minute")
 def create_mechanic():
@@ -19,8 +18,6 @@ def create_mechanic():
         "name": new_mechanic.name
     }), 201
 
-
-# GET mechanics (CACHED) - ordered by most tickets worked on
 @mechanic_bp.route("/", methods=["GET"])
 @cache.cached(timeout=60)
 def get_mechanics():
@@ -36,8 +33,6 @@ def get_mechanics():
         } for m in sorted_mechanics
     ])
 
-
-# LOGIN (GET TOKEN)
 @mechanic_bp.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -50,7 +45,6 @@ def login():
     return {"token": token}
 
 
-# PROTECTED ROUTE
 @mechanic_bp.route("/protected", methods=["GET"])
 @mechanic_token_required
 def protected(user_id):

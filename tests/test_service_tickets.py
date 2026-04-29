@@ -14,13 +14,11 @@ class TestServiceTickets(unittest.TestCase):
 
         self.client = self.app.test_client()
 
-    # 🔒 GET (protected route → expect 401)
-    def test_get_service_tickets(self):
+       def test_get_service_tickets(self):
         response = self.client.get('/service-tickets/')
         self.assertEqual(response.status_code, 401)
 
-    # 🔒 POST (also protected → expect 401)
-    def test_create_service_ticket(self):
+       def test_create_service_ticket(self):
         payload = {
             "description": "Oil change",
             "status": "Open"

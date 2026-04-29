@@ -4,7 +4,7 @@ from application.extensions import db
 from application.models import ServiceTicket, Mechanic, Inventory
 from ..utils.util import token_required, mechanic_token_required
 
-# CREATE ticket
+
 @service_ticket_bp.route("/", methods=["POST"])
 @token_required
 def create_ticket(customer_id):
@@ -25,7 +25,6 @@ def create_ticket(customer_id):
     }), 201
 
 
-# GET all tickets
 @service_ticket_bp.route("/", methods=["GET"])
 @mechanic_token_required
 def get_tickets(mechanic_id):
@@ -42,7 +41,6 @@ def get_tickets(mechanic_id):
     ])
 
 
-# GET my tickets (customer)
 @service_ticket_bp.route("/my-tickets", methods=["GET"])
 @token_required
 def my_tickets(customer_id):
@@ -57,8 +55,6 @@ def my_tickets(customer_id):
         } for t in tickets
     ])
 
-
-# ASSIGN mechanic to ticket
 @service_ticket_bp.route("/<int:ticket_id>/assign", methods=["PUT"])
 @mechanic_token_required
 def assign_mechanic(mechanic_id, ticket_id):
@@ -78,7 +74,6 @@ def assign_mechanic(mechanic_id, ticket_id):
     return jsonify({"message": "Mechanic assigned"})
 
 
-# EDIT ticket - add/remove mechanics
 @service_ticket_bp.route("/<int:ticket_id>/edit", methods=["PUT"])
 @mechanic_token_required
 def edit_ticket(mechanic_id, ticket_id):
@@ -108,7 +103,6 @@ def edit_ticket(mechanic_id, ticket_id):
     })
 
 
-# ADD part to ticket
 @service_ticket_bp.route("/<int:ticket_id>/add-part", methods=["PUT"])
 @mechanic_token_required
 def add_part(mechanic_id, ticket_id):

@@ -1,30 +1,35 @@
 from flask import Flask, request, jsonify
 from .extensions import db, ma, limiter, cache
-from config import Config
+from config import Config, ProductionConfig
 
-def create_app():
+
+def create_app(config_name="Config"):
     app = Flask(__name__)
-    app.config.from_object(Config)
 
-    # Initialize extensions
+    # ✅ SWITCH CONFIG BASED ON INPUT
+    if config_name == "ProductionConfig":
+        app.config.from_object(ProductionConfig)
+    else:
+        app.config.from_object(Config)
+
+
     db.init_app(app)
     ma.init_app(app)
     limiter.init_app(app)
     cache.init_app(app)
 
-    # Import blueprints
+    
     from .blueprints.mechanic.routes import mechanic_bp
     from .blueprints.service_ticket.routes import service_ticket_bp
     from .blueprints.customer.routes import customer_bp
     from .blueprints.inventory.routes import inventory_bp
 
-    # Register blueprints
     app.register_blueprint(mechanic_bp, url_prefix="/mechanics")
     app.register_blueprint(service_ticket_bp, url_prefix="/service-tickets")
     app.register_blueprint(customer_bp, url_prefix="/customers")
     app.register_blueprint(inventory_bp, url_prefix="/inventory")
 
-    # 🔥 TDD ROUTES (FOR TESTING)
+
 
     @app.route('/sum', methods=['POST'])
     def sum_numbers():
