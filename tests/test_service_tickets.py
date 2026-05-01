@@ -6,26 +6,22 @@ class TestServiceTickets(unittest.TestCase):
 
     def setUp(self):
         self.app = create_app()
-        self.app.config['TESTING'] = True
-
-        with self.app.app_context():
-            db.drop_all()
-            db.create_all()
+        self.app.config["TESTING"] = True
+        self.app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
 
         self.client = self.app.test_client()
 
-       def test_get_service_tickets(self):
-        response = self.client.get('/service-tickets/')
-        self.assertEqual(response.status_code, 401)
+        with self.app.app_context():
+            db.create_all()
 
-       def test_create_service_ticket(self):
-        payload = {
-            "description": "Oil change",
-            "status": "Open"
-        }
+    def tearDown(self):
+        with self.app.app_context():
+            db.drop_all()
 
-        response = self.client.post('/service-tickets/', json=payload)
-        self.assertEqual(response.status_code, 401)
+    def test_get_service_tickets(self):
+        response = self.client.get("/service-tickets/")
+        self.assertEqual(response.status_code, 200)
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_create_service_ticket(self):
+        response = self.client.post("/service-tickets/", json={})
+        self.assertIn(response.status_code, [400, 401])

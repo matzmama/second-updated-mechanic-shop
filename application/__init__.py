@@ -1,7 +1,8 @@
 from flask import Flask
 from .extensions import db, ma, limiter, cache
+from config import Config  # 👈 ADD THIS
 
-def create_app(config_class):
+def create_app(config_class=Config):  # 👈 DEFAULT ADDED
     app = Flask(__name__)
     app.config.from_object(config_class)
 
